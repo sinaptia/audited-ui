@@ -1,0 +1,22 @@
+es:
+  activerecord:
+    attributes:
+      audit:
+        action: Acción
+        audited_changes: Cambios
+        comment: Comentario
+        created_at: Fecha de creación
+        user: Usuario
+        version: Versión
+  audited_ui:
+    audits:
+      index:
+        actions:
+          create: Creación
+          update: Actualización
+        after: Después
+        attribute: Atributo
+        before: Antes
+        empty: No hay registros de auditoría aún.
+        system: Sistema
+        title: "Auditoría: %{what}"

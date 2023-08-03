@@ -1,0 +1,54 @@
+<h1><%=t ".title", what: (@auditable || @auditable_type).to_s %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><%=t "activerecord.attributes.audit.version" %></th>
+      <th><%=t "activerecord.attributes.audit.created_at" %></th>
+      <th><%=t "activerecord.attributes.audit.action" %></th>
+      <th><%=t "activerecord.attributes.audit.user" %></th>
+      <th colspan="3"><%=t "activerecord.attributes.audit.audited_changes" %></th>
+      <th><%=t "activerecord.attributes.audit.comment" %></th>
+    </tr>
+    <tr>
+      <th colspan="4"></th>
+      <th><%=t ".attribute" %></th>
+      <th><%=t ".before" %></th>
+      <th><%=t ".after" %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @audits.any? %>
+      <% @audits.each do |audit| %>
+        <% audit.audited_changes.each_with_index do |(attribute, change), i| %>
+          <tr>
+            <% if i.zero? %>
+              <td rowspan="<%= audit.audited_changes.size %>"><%= audit.version %></td>
+              <td rowspan="<%= audit.audited_changes.size %>"><%= audit.created_at %></td>
+              <td rowspan="<%= audit.audited_changes.size %>"><%=t ".actions.#{audit.action}" %></td>
+              <td rowspan="<%= audit.audited_changes.size %>"><%= audit.user.try(:email) || t(".system") %></td>
+            <% end %>
+            <td><%=t "activerecord.attributes.#{audit.auditable_type}.#{attribute}" %></td>
+            <% if change.is_a? Array %>
+              <td><%= change.first %></td>
+              <td><%= change.last %></td>
+            <% else %>
+              <td></td>
+              <td><%= change %></td>
+            <% end %>
+            <td><%= audit.comment %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    <% else %>
+      <tr>
+        <td class="text-center" colspan="8"><%=t ".empty" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% _with_routes audited_ui.routes do %>
+  <%= paginate @audits %>
+<% end %>
