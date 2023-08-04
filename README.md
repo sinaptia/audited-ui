@@ -75,7 +75,7 @@ en:
 - [ ] AuditedUI configuration, if we need to configure anything.
 - [ ] Ready to use views (tailwind/bootstrap), if it makes sense.
 - [ ] Filters (by user, by dates, by changed attribute).
-- [ ] Sort by column.
+- [x] Sort by column.
 - [ ] Revert to a specific version.
 - [ ] Tests.
 

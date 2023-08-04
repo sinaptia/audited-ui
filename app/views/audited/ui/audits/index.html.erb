@@ -9,8 +9,8 @@
       <% if @auditable.blank? %>
         <th><%=t "activerecord.attributes.audit.auditable" %></th>
       <% end %>
-      <th><%=t "activerecord.attributes.audit.version" %></th>
-      <th><%=t "activerecord.attributes.audit.created_at" %></th>
+      <th><%= sort_link "version" %></th>
+      <th><%= sort_link "created_at" %></th>
       <th><%=t "activerecord.attributes.audit.action" %></th>
       <th><%=t "activerecord.attributes.audit.user" %></th>
       <th colspan="3"><%=t "activerecord.attributes.audit.audited_changes" %></th>
