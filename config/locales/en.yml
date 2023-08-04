@@ -8,15 +8,16 @@ en:
         created_at: Created at
         user: User
         version: Version
-  audited_ui:
-    audits:
-      index:
-        actions:
-          create: Create
-          update: Update
-        after: After
-        attribute: Attribute
-        before: Before
-        empty: There are no audit records yet.
-        system: System
-        title: Auditing %{what}
+  audited:
+    ui:
+      audits:
+        index:
+          actions:
+            create: Create
+            update: Update
+          after: After
+          attribute: Attribute
+          before: Before
+          empty: There are no audit records yet.
+          system: System
+          title: Auditing %{what}

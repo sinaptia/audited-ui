@@ -48,7 +48,7 @@ If you already set it up, you'll notice that audited-ui comes with a barebone UI
 To generate the views simply run:
 
 ```bash
-$ bundle exec rails g audited_ui:views
+$ bundle exec rails g audited:ui:views
 ```
 
 ## TODO
