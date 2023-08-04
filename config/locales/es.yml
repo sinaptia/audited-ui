@@ -3,6 +3,8 @@ es:
     attributes:
       audit:
         action: Acción
+        auditable: Registro auditado
+        auditable_type: Tipo de registro
         audited_changes: Cambios
         comment: Comentario
         created_at: Fecha de creación

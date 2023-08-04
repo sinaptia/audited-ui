@@ -3,6 +3,8 @@ en:
     attributes:
       audit:
         action: Action
+        auditable: Auditable
+        auditable_type: Auditable type
         audited_changes: Changes
         comment: Comment
         created_at: Created at
