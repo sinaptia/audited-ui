@@ -51,6 +51,24 @@ To generate the views simply run:
 $ bundle exec rails g audited:ui:views
 ```
 
+### I18n
+
+Every string is I18ned, even class and attributes names. See [this guide](https://guides.rubyonrails.org/i18n.html#translations-for-active-record-models) if you want to translate your audited models and attributes.
+
+By default only english and spanish are supported. You can add other locales by copying the content of [this file](https://github.com/sinaptia/audited-ui/blob/main/config/locales/en.yml) into your app's `config/locale/yourlocale.yml` and translating the given strings. And if you do that send a PR :P .
+
+If you need to customize just one string, copy that string in your app's locale file:
+
+```yml
+en:
+  audited:
+    ui:
+      audits:
+        index:
+          title:
+            all: Auditing everything
+```
+
 ## TODO
 
 - [ ] Mount the engine with a method, similar to `devise_for`, so we can have more and better control on routes.

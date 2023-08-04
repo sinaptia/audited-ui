@@ -20,4 +20,7 @@ en:
           before: Before
           empty: There are no audit records yet.
           system: System
-          title: Auditing %{what}
+          title:
+            all: Auditing all records
+            auditable: Auditing %{auditable}
+            auditable_type: Auditing all %{auditable_type}

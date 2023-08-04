@@ -20,4 +20,7 @@ es:
           before: Antes
           empty: No hay registros de auditoría aún.
           system: Sistema
-          title: "Auditoría: %{what}"
+          title:
+            all: Auditoría
+            auditable: Auditando %{auditable}
+            auditable_type: Auditando todos los %{auditable_type}

@@ -1,8 +1,14 @@
-<h1><%=t ".title", what: (@auditable || @auditable_type).to_s %></h1>
+<h1><%= title @auditable, @auditable_type %></h1>
 
 <table>
   <thead>
     <tr>
+      <% if @auditable_type.blank? %>
+        <th><%=t "activerecord.attributes.audit.auditable_type" %></th>
+      <% end %>
+      <% if @auditable.blank? %>
+        <th><%=t "activerecord.attributes.audit.auditable" %></th>
+      <% end %>
       <th><%=t "activerecord.attributes.audit.version" %></th>
       <th><%=t "activerecord.attributes.audit.created_at" %></th>
       <th><%=t "activerecord.attributes.audit.action" %></th>
@@ -11,7 +17,7 @@
       <th><%=t "activerecord.attributes.audit.comment" %></th>
     </tr>
     <tr>
-      <th colspan="4"></th>
+      <th colspan="<%= 6 - [@auditable_type, @auditable].compact.size %>"></th>
       <th><%=t ".attribute" %></th>
       <th><%=t ".before" %></th>
       <th><%=t ".after" %></th>
@@ -24,12 +30,18 @@
         <% audit.audited_changes.each_with_index do |(attribute, change), i| %>
           <tr>
             <% if i.zero? %>
+              <% if @auditable_type.blank? %>
+                <td rowspan="<%= audit.audited_changes.size %>"><%=t "activerecord.models.#{audit.auditable_type.downcase}" %></td>
+              <% end %>
+              <% if @auditable.blank? %>
+                <td rowspan="<%= audit.audited_changes.size %>"><%= audit.auditable.to_s %></td>
+              <% end %>
               <td rowspan="<%= audit.audited_changes.size %>"><%= audit.version %></td>
               <td rowspan="<%= audit.audited_changes.size %>"><%= audit.created_at %></td>
               <td rowspan="<%= audit.audited_changes.size %>"><%=t ".actions.#{audit.action}" %></td>
               <td rowspan="<%= audit.audited_changes.size %>"><%= audit.user.try(:email) || t(".system") %></td>
             <% end %>
-            <td><%=t "activerecord.attributes.#{audit.auditable_type}.#{attribute}" %></td>
+            <td><%=t "activerecord.attributes.#{audit.auditable_type.downcase}.#{attribute}" %></td>
             <% if change.is_a? Array %>
               <td><%= change.first %></td>
               <td><%= change.last %></td>
