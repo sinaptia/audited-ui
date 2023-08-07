@@ -74,7 +74,7 @@ en:
 - [ ] Mount the engine with a method, similar to `devise_for`, so we can have more and better control on routes.
 - [ ] AuditedUI configuration, if we need to configure anything.
 - [ ] Ready to use views (tailwind/bootstrap), if it makes sense.
-- [ ] Filters (by user, by dates, by changed attribute).
+- [x] Filters (by user, by dates, by changed attribute).
 - [x] Sort by column.
 - [ ] Revert to a specific version.
 - [ ] Tests.

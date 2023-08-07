@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "audited", ">= 5.0.0"
   spec.add_dependency "kaminari"
   spec.add_dependency "rails", ">= 5.0.0"
+  spec.add_dependency "ransack"
 
   spec.add_development_dependency "standardrb"
 end

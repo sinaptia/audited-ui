@@ -1,5 +1,7 @@
 <h1><%= title @auditable, @auditable_type %></h1>
 
+<%= render "search_form" %>
+
 <table>
   <thead>
     <tr>
@@ -9,8 +11,10 @@
       <% if @auditable.blank? %>
         <th><%=t "activerecord.attributes.audit.auditable" %></th>
       <% end %>
-      <th><%= sort_link "version" %></th>
-      <th><%= sort_link "created_at" %></th>
+      <% _with_routes audited_ui.routes do %>
+        <th><%= sort_link @q, :version, t("activerecord.attributes.audit.version") %></th>
+        <th><%= sort_link @q, :created_at, t("activerecord.attributes.audit.created_at") %></th>
+      <% end %>
       <th><%=t "activerecord.attributes.audit.action" %></th>
       <th><%=t "activerecord.attributes.audit.user" %></th>
       <th colspan="3"><%=t "activerecord.attributes.audit.audited_changes" %></th>
@@ -31,10 +35,14 @@
           <tr>
             <% if i.zero? %>
               <% if @auditable_type.blank? %>
-                <td rowspan="<%= audit.audited_changes.size %>"><%=t "activerecord.models.#{audit.auditable_type.downcase}" %></td>
+                <td rowspan="<%= audit.audited_changes.size %>">
+                  <%= link_to t("activerecord.models.#{audit.auditable_type.downcase}"), audited_ui.auditable_type_audits_path(audit.auditable_type.downcase) %>
+                </td>
               <% end %>
               <% if @auditable.blank? %>
-                <td rowspan="<%= audit.audited_changes.size %>"><%= audit.auditable.to_s %></td>
+                <td rowspan="<%= audit.audited_changes.size %>">
+                  <%= link_to audit.auditable, audited_ui.auditable_audits_path(auditable_type: audit.auditable_type.downcase, auditable_id: audit.auditable_id) %>
+                </td>
               <% end %>
               <td rowspan="<%= audit.audited_changes.size %>"><%= audit.version %></td>
               <td rowspan="<%= audit.audited_changes.size %>"><%= audit.created_at %></td>

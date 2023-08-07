@@ -6,7 +6,9 @@ module Audited
       before_action :set_audits
 
       def index
-        @audits = @audits.reorder("#{sort_column}": sort_direction).page params[:page]
+        @q = @audits.ransack params[:q]
+        @q.sorts = "created_at desc" if @q.sorts.none?
+        @audits = @q.result(distinct: true).page params[:page]
       end
 
       private
@@ -32,16 +34,6 @@ module Audited
           Audited::Audit.all
         end
       end
-
-      def sort_column
-        Audited::Audit.column_names.include?(params[:sort]) ? params[:sort] : "created_at"
-      end
-      helper_method :sort_column
-
-      def sort_direction
-        %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
-      end
-      helper_method :sort_direction
     end
   end
 end

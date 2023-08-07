@@ -1,0 +1,23 @@
+<% _with_routes audited_ui.routes do %>
+  <%= search_form_for @q, url: request.path do |f| %>
+    <div>
+      <%= f.label t("activerecord.attributes.audit.user") %>
+      <%= f.collection_select :user_id_eq, User.all, :id, :email, include_blank: true %>
+    </div>
+
+    <div>
+      <%= f.label t("activerecord.attributes.audit.created_at") %>
+      <%= f.date_field :created_at_gteq %>
+      <%= f.date_field :created_at_lteq %>
+    </div>
+
+    <div>
+      <%= f.label t("activerecord.attributes.audit.audited_changes") %>
+      <%= f.text_field :raw_audited_changes_cont %>
+    </div>
+
+    <div>
+      <%= f.submit %>
+    </div>
+  <% end %>
+<% end %>
