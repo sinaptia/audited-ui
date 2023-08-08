@@ -7,7 +7,7 @@ module Audited
 
   class Audit < ::ActiveRecord::Base
     ransacker :raw_audited_changes, type: :text do
-      Arel.sql "audited_changes"
+      Arel.sql "audited_changes::text"
     end
 
     def self.ransackable_associations(auth_object = nil)
