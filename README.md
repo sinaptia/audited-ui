@@ -24,22 +24,33 @@ $ gem install audited-ui
 
 ## Usage
 
-Mount the engine in `config/routes.rb`:
+By just installing it, audited-ui will add the following routes:
 
-```ruby
-# after root url
-mount Audited::Ui::Engine, at: "/"
+```
+/audited/audits
+/audited/audits/:auditable_type
+/audited/audits/:auditable_type/:auditable_id
 ```
 
-And then just link it:
+that will allow you to audit all records of all types, all records of a given auditable type, or all records of a given auditable object, respectively.
+
+Audit all records by linking to `audited_audits_path`, like this:
 
 ```erb
-<%= link_to "Audit all records", audited_ui.audits_path %>
-<%= link_to "Audit all people records", audited_ui.auditable_type_audits_path(auditable_type: "person") %>
-<%= link_to "Audit this person", audited_ui.auditable_audits_path(auditable_type: "person", auditable_id: person.id) %>
+<%= link_to "Audit all records", audited_audits_path %>
 ```
 
-There's a single controller that's smart enough to understand if we want to show all audit records, all audit records for a given `auditable_type` (aka class) or `auditable` (aka object/record). For example, you can visit [http://localhost:3000/audits](http://localhost:3000/audits) and it will show all audited records, [http://localhost:3000/audits/person](http://localhost:3000/audits/person) and it will show all audited records for the `Person` model and [http://localhost:3000/audits/person/1](http://localhost:3000/audits/person/1) and it will show all audited records for `Person.find(1)`.
+Or just a specific auditable type, using `audited_auditable_type_audits_path`, like this:
+
+```erb
+<%= link_to "Audit all people records", audited_auditable_type_audits_path(auditable_type: "person") %>
+```
+
+Or a specific record, using `audited_auditable_audits_path`, like this:
+
+```erb
+<%= link_to "Audit this person", audited_auditable_audits_path(auditable_type: "person", auditable_id: person.id) %>
+```
 
 ### Customizing views
 
@@ -71,7 +82,7 @@ en:
 
 ## TODO
 
-- [ ] Mount the engine with a method, similar to `devise_for`, so we can have more and better control on routes.
+- [x] Mount the engine with a method, similar to `devise_for`, so we can have more and better control on routes.
 - [ ] AuditedUI configuration, if we need to configure anything.
 - [ ] Ready to use views (tailwind/bootstrap), if it makes sense.
 - [x] Filters (by user, by dates, by changed attribute).
