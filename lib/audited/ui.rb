@@ -1,5 +1,6 @@
 require "audited/ui/version"
 require "audited/ui/engine"
+require "ransack"
 
 module Audited
   module Ui
