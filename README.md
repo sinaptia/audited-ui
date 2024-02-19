@@ -62,6 +62,22 @@ To generate the views simply run:
 $ bundle exec rails g audited:ui:views
 ```
 
+### Authorization
+
+If you want to authorize users to access the audited-ui, you can define a `authorize_audited_ui` method in your `ApplicationController` and run your own authorization.
+
+For example, if you're using Devise and want only authenticated users to access the audited-ui, you can do this:
+
+```ruby
+class ApplicationController < ActionController::Base
+  def authorize_audited_ui
+    authenticate_user!
+  end
+end
+```
+
+Similarly, if you use CanCanCan or Pundit, you could implement your own authorization in `authorize_audited_ui`.
+
 ### I18n
 
 Every string is I18ned, even class and attributes names. See [this guide](https://guides.rubyonrails.org/i18n.html#translations-for-active-record-models) if you want to translate your audited models and attributes.
