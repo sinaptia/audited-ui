@@ -4,6 +4,7 @@ module Audited
       before_action :set_auditable_type
       before_action :set_auditable
       before_action :set_audits
+      before_action :resolve_authorization
 
       def index
         @q = @audits.ransack params[:q]
@@ -12,6 +13,10 @@ module Audited
       end
 
       private
+
+      def resolve_authorization
+        try :authorize_audited_ui
+      end
 
       def set_auditable
         @auditable = if @auditable_type.present? && params[:auditable_id].present?
