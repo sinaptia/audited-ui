@@ -1,0 +1,23 @@
+<%%= search_form_for @q, url: request.path, class: "grid grid-cols-3 gap-4 my-5" do |f| %>
+  <div>
+    <%%= f.label t("activerecord.attributes.audit.user"), class: "font-semibold" %>
+    <%%= f.collection_select :user_id_eq, User.all, :id, :to_s, {include_blank: true}, class: "block w-full rounded-md px-3 py-2 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600" %>
+  </div>
+
+  <div>
+    <%%= f.label t("activerecord.attributes.audit.created_at"), class: "font-semibold" %>
+    <div class="flex gap-4">
+      <%%= f.date_field :created_at_gteq, class: "flex-1 rounded-md px-3 py-1.5 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600" %>
+      <%%= f.date_field :created_at_lteq, class: "flex-1 rounded-md px-3 py-1.5 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600" %>
+    </div>
+  </div>
+
+  <div>
+    <%%= f.label t("activerecord.attributes.audit.audited_changes"), class: "font-semibold" %>
+    <%%= f.text_field :raw_audited_changes_cont, class: "block w-full rounded-md px-3 py-1.5 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600" %>
+  </div>
+
+  <div class="col-start-3 place-self-end">
+    <%%= f.submit class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<%% end %>

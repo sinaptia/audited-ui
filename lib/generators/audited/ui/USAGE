@@ -1,0 +1,13 @@
+Description:
+    Generate controllers and views for the audited gem.
+
+Example:
+    bin/rails generate audited:ui
+
+    This will create:
+        app/controllers/audits_controller.rb
+        app/helpers/audits_helper.rb
+        app/views/audits/_filters.html.erb
+        app/views/audits/index.html.erb
+        config/locales/audited.en.yml
+        config/locales/audited.es.yml

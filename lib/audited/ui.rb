@@ -1,5 +1,6 @@
 require "audited/ui/version"
-require "audited/ui/engine"
+require "audited/ui/railtie"
+require "kaminari"
 require "ransack"
 
 module Audited
