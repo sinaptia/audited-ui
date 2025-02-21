@@ -1,0 +1,72 @@
+<%% content_for :title, title(@auditable, @auditable_type) %>
+
+<h1 class="font-bold text-4xl"><%%= title @auditable, @auditable_type %></h1>
+
+<%%= render "filters" %>
+
+<table class="min-w-full divide-y divide-gray-300">
+  <thead>
+    <tr>
+      <%% if @auditable_type.blank? %>
+        <th class="pr-6 py-3.5 text-left font-semibold"><%%=t "activerecord.attributes.audit.auditable_type" %></th>
+      <%% end %>
+      <%% if @auditable.blank? %>
+        <th class="pr-6 py-3.5 text-left font-semibold"><%%=t "activerecord.attributes.audit.auditable" %></th>
+      <%% end %>
+      <th class="pr-6 py-3.5 text-left font-semibold"><%%= sort_link @q, :version, t("activerecord.attributes.audit.version") %></th>
+      <th class="pr-6 py-3.5 text-left font-semibold"><%%= sort_link @q, :created_at, t("activerecord.attributes.audit.created_at") %></th>
+      <th class="pr-6 py-3.5 text-left font-semibold"><%%=t "activerecord.attributes.audit.action" %></th>
+      <th class="pr-6 py-3.5 text-left font-semibold"><%%=t "activerecord.attributes.audit.user" %></th>
+      <th class="pr-6 py-3.5 text-left font-semibold" colspan="3"><%%=t "activerecord.attributes.audit.audited_changes" %></th>
+      <th class="pr-6 py-3.5 text-left font-semibold"><%%=t "activerecord.attributes.audit.comment" %></th>
+    </tr>
+    <tr>
+      <th class="pr-6 py-3.5 text-left font-semibold" colspan="<%%= 6 - [@auditable_type, @auditable].compact.size %>"></th>
+      <th class="pr-6 py-3.5 text-left font-semibold"><%%=t ".attribute" %></th>
+      <th class="pr-6 py-3.5 text-left font-semibold"><%%=t ".before" %></th>
+      <th class="pr-6 py-3.5 text-left font-semibold"><%%=t ".after" %></th>
+      <th class="pr-6 py-3.5 text-left font-semibold"></th>
+    </tr>
+  </thead>
+  <tbody class="divide-y divide-gray-200">
+    <%% if @audits.any? %>
+      <%% @audits.each do |audit| %>
+        <%% audit.audited_changes.each_with_index do |(attribute, change), i| %>
+          <tr>
+            <%% if i.zero? %>
+              <%% if @auditable_type.blank? %>
+                <td class="whitespace-nowrap pr-6 py-4" rowspan="<%%= audit.audited_changes.size %>">
+                  <%%= link_to t("activerecord.models.#{audit.auditable_type.underscore.downcase}"), auditable_type_audits_path(audit.auditable_type.pluralize.underscore), class: "hover:underline" %>
+                </td>
+              <%% end %>
+              <%% if @auditable.blank? %>
+                <td class="whitespace-nowrap pr-6 py-4" rowspan="<%%= audit.audited_changes.size %>">
+                  <%%= link_to audit.auditable, auditable_audits_path(auditable_type: audit.auditable_type.pluralize.underscore, auditable_id: audit.auditable_id), class: "hover:underline" %>
+                </td>
+              <%% end %>
+              <td class="whitespace-nowrap pr-6 py-4" rowspan="<%%= audit.audited_changes.size %>"><%%= audit.version %></td>
+              <td class="whitespace-nowrap pr-6 py-4" rowspan="<%%= audit.audited_changes.size %>"><%%= audit.created_at %></td>
+              <td class="whitespace-nowrap pr-6 py-4" rowspan="<%%= audit.audited_changes.size %>"><%%=t ".actions.#{audit.action}" %></td>
+              <td class="whitespace-nowrap pr-6 py-4" rowspan="<%%= audit.audited_changes.size %>"><%%= audit.user.try(:to_s) || t(".system") %></td>
+            <%% end %>
+            <td class="whitespace-nowrap pr-6 py-4"><%%=t "activerecord.attributes.#{audit.auditable_type.underscore.downcase}.#{attribute}" %></td>
+            <%% if change.is_a? Array %>
+              <td class="pr-6 py-4"><%%= change.first %></td>
+              <td class="pr-6 py-4"><%%= change.last %></td>
+            <%% else %>
+              <td class="pr-6 py-4"></td>
+              <td class="pr-6 py-4"><%%= change %></td>
+            <%% end %>
+            <td class="whitespace-nowrap pr-6 py-4"><%%= audit.comment %></td>
+          </tr>
+        <%% end %>
+      <%% end %>
+    <%% else %>
+      <tr>
+        <td class="whitespace-nowrap pr-6 py-4" colspan="8"><%%=t ".empty" %></td>
+      </tr>
+    <%% end %>
+  </tbody>
+</table>
+
+<%%= paginate @audits %>
